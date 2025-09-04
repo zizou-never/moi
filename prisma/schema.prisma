@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+      url       = env("DATABASE_URL")
+        directUrl = env("DIRECT_URL")
+}
+
+model Sujet {
+    id    Int     @id @default(autoincrement())
+      nom   String  @unique
+        slug  String  @unique
+          cours Cours[]
+}
+
+model Cours {
+    id        Int      @id @default(autoincrement())
+      titre     String
+        contenu   String
+          sujet     Sujet    @relation(fields: [sujetId], references: [id])
+            sujetId   Int
+              createdAt DateTime @default(now())
+}
+
+model Annale {
+    id        Int      @id @default(autoincrement())
+      annee     Int
+        titre     String
+          urlPDF    String
+            createdAt DateTime @default(now())
+}
+}
+}
+}
+}
+}
